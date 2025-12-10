@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>CMPS 260 – Big O, Stacks, Euler Problems</title>
+    <style>
+      * { font-family: monospace; }
+    </style>
+    <script>
+      // NOTE: You must implement the data structures using the no prototype approach.
+      //       This is what the book uses.
+
+      //----------------//
+      // Big O notation //
+      //----------------//
+      console.log("Big O notation");
+
+      // 1. Analyze the complexity of the isPalindrome function.
+      function isPalindrome(str) {
+        for (var i = 0; i < str.length / 2; i++) {
+          if (str[i] !== str[str.length - i - 1]) {
+            return false;
+          }
+        }
+        return true;
+      }
+
+      // Complexity:
+      // Best case: O(1)   → first characters don't match.
+      // Worst case: O(n)  → full scan (palindrome).
+      // Average: O(n)     → mismatch somewhere in the middle.
+
+
+      // 2. Min element in a stack in O(1) time.
+      function MinStack() {
+        var stack = [];
+        var minStack = [];
+
+        this.push = function(value) {
+          stack.push(value);
+
+          if (minStack.length === 0 || value <= minStack[minStack.length - 1]) {
+            minStack.push(value);
+          } else {
+            minStack.push(minStack[minStack.length - 1]);
+          }
+        };
+
+        this.pop = function() {
+          minStack.pop();
+          return stack.pop();
+        };
+
+        this.getMin = function() {
+          return minStack[minStack.length - 1];
+        };
+      }
+
+      // Test MinStack
+      var s = new MinStack();
+      s.push(5);
+      s.push(2);
+      s.push(8);
+      s.push(1);
+      console.log("Min element:", s.getMin()); // 1
+      s.pop();
+      console.log("Min element:", s.getMin()); // 2
+
+
+      //----------------------------//
+      // Having fun with algorithms //
+      //----------------------------//
+      console.log("Having fun with algorithms");
+
+      // 1. Project Euler Problem 1
+      function euler1(limit) {
+        var sum = 0;
+        for (var i = 0; i < limit; i++) {
+          if (i % 3 === 0 || i % 5 === 0) {
+            sum += i;
+          }
+        }
+        return sum;
+      }
+
+      console.log("Euler Problem 1:", euler1(1000));
+
+
+      // 2. Project Euler Problem 2
+      function euler2(limit) {
+        var sum = 0;
+        var a = 1;
+        var b = 2;
+
+        while (b < limit) {
+          if (b % 2 === 0) {
+            sum += b;
+          }
+          var next = a + b;
+          a = b;
+          b = next;
+        }
+
+        return sum;
+      }
+
+      console.log("Euler Problem 2:", euler2(4000000));
+    </script>
+  </head>
+
+  <body>
+    <h1>Check the console for output</h1>
+  </body>
+</html>
